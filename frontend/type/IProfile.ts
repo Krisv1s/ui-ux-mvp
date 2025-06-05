@@ -4,6 +4,7 @@ export interface IProfile {
   orders: {
     id: number;
     date: string;
+    name: string;
     status: string;
   }[];
 }

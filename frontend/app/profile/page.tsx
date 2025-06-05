@@ -9,15 +9,21 @@ import {
   Stack,
   Table,
 } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import React from "react";
 import useSWR from "swr";
 
 function Profile() {
-  const { data: profile } = useSWR<IProfile | boolean>("/api/profile", {
-    fallbackData: false,
-  });
+  const { data: profile, isLoading } = useSWR<IProfile>("/api/profile");
 
-  if (typeof profile === "boolean") return <Skeleton />;
+  const router = useRouter();
+
+  if (isLoading) return <Skeleton />;
+
+  if (!profile?.name) {
+    router.push("/");
+    return <div>Произошла ошибка</div>;
+  }
 
   return (
     <Stack p={30}>
@@ -40,6 +46,7 @@ function Profile() {
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader>ID</Table.ColumnHeader>
+            <Table.ColumnHeader>Название товара</Table.ColumnHeader>
             <Table.ColumnHeader>Дата</Table.ColumnHeader>
             <Table.ColumnHeader textAlign="end">
               Статус заказа
@@ -50,6 +57,7 @@ function Profile() {
           {profile?.orders.map((item) => (
             <Table.Row key={item.id}>
               <Table.Cell>{item.id}</Table.Cell>
+              <Table.Cell>{item.name}</Table.Cell>
               <Table.Cell>{new Date(item.date).toLocaleString()}</Table.Cell>
               <Table.Cell textAlign="end">{item.status}</Table.Cell>
             </Table.Row>
