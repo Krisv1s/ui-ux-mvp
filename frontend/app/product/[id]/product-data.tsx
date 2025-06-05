@@ -113,7 +113,7 @@ function ProductData(props: IProductDataProps) {
         <Table.Body>
           {product?.suppliers_list.map((item) => (
             <Table.Row key={item.id}>
-              <Table.Cell>{item.id}</Table.Cell>
+              <Table.Cell>{item.name}</Table.Cell>
               <Table.Cell>{item.price}</Table.Cell>
               <Table.Cell>
                 {item.type === "local" ? "Россия" : "Внешняя страна"}
