@@ -23,6 +23,7 @@ class OrderInfo(BaseModel):
     id: int
     date: datetime
     status: str
+    name: str
 
 class UserProfileWithOrders(UserProfile):
     orders: List[OrderInfo]

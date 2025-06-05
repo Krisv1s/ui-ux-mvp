@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 import models, schemas, auth
 from database import get_db
 from fastapi import Response
@@ -68,17 +68,24 @@ def read_user_profile(
         db: Session = Depends(get_db),
 ):
     user_orders = db.query(models.Order) \
+        .options(
+        joinedload(models.Order.product_supplier)
+        .joinedload(models.ProductSupplier.product)
+    ) \
         .filter_by(user_id=current_user.id) \
         .order_by(models.Order.date.desc()) \
         .all()
+
+    orders = [
+        schemas.OrderInfo(
+            id=order.id,
+            date=order.date,
+            status=order.status.value,
+            name=order.product_supplier.product.name if order.product_supplier and order.product_supplier.product else None,
+        )
+        for order in user_orders
+    ]
     return schemas.UserProfileWithOrders(
         **current_user.__dict__,
-        orders=[
-            schemas.OrderInfo(
-                id=order.id,
-                date=order.date,
-                status=order.status.value
-            )
-            for order in user_orders
-        ]
+        orders=orders
     )
