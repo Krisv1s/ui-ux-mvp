@@ -1,0 +1,38 @@
+@startuml
+actor User
+    participant Browser
+    participant Server
+    participant Database
+
+    User->>Browser: 1. Открывает сайт
+    Browser->>Server: Запрос главной страницы
+    Server-->>Browser: Каталог товаров
+
+    User->>Browser: 2. Регистрация/Вход
+    Browser->>Server: Отправка формы
+    Server->>Database: Сохранение/Проверка данных
+    Database-->>Server: Подтверждение
+    Server-->>Browser: Установка cookie (JWT)
+
+    User->>Browser: 3. Выбор товара
+    Browser->>Server: Запрос страницы товара
+    Server->>Database: Получение данных о товаре
+    Database-->>Server: Данные + поставщики
+    Server-->>Browser: Страница товара
+
+    User->>Browser: 4. Оформление заказа
+    Browser->>Server: Запрос формы заказа
+    Server-->>Browser: Модальное окно с формой
+
+    User->>Browser: 5. Заполнение данных
+    Browser->>Server: Отправка формы заказа
+    Server->>Database: Сохранение заказа
+    Database-->>Server: ID заказа
+    Server-->>Browser: Подтверждение + обновление профиля
+
+    User->>Browser: 6. Просмотр профиля
+    Browser->>Server: Запрос данных профиля
+    Server->>Database: Получение данных пользователя
+    Database-->>Server: Данные + история заказов
+    Server-->>Browser: Страница профиля
+@enduml
