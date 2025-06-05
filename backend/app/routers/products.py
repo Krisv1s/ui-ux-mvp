@@ -29,7 +29,7 @@ def get_products(
         id=product.id,
         name=product.name,
         type=(db.query(models.ProductType).get(product.type)).name,
-        src=product.src,
+        img_link=product.src,
         suppliers_list=[
             schemas.ProductSupplier(
                 id=supplier.id,

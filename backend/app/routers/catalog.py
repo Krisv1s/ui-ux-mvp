@@ -54,7 +54,7 @@ def get_products(
                 id=product.id,
                 name=product.name,
                 type=(db.query(models.ProductType).get(product.type)).name,
-                src=product.src,
+                img_link=product.src,
                 price=product.price
             )
             for product in products

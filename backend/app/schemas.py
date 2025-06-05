@@ -31,7 +31,7 @@ class Product(BaseModel):
     id: int
     name: str
     type: str
-    src: Optional[str]
+    img_link: Optional[str]
 
 class CatalogProduct(Product):
     price: float

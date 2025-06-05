@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
         source: "/api/:path*",
         destination: `${
           process.env.NEXT_PUBLIC_API_URL ||
-          "http://localhost:8000"
+          "http://host.docker.internal:8000"
         }/api/:path*`,
       },
     ];
