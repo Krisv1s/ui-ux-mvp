@@ -73,6 +73,7 @@ function ProductData(props: IProductDataProps) {
           "С вами свяжутся в ближайшее время по контактным данным из заявки",
         type: "success",
       });
+      setOpen(false);
     } catch (error) {
       console.error(error);
       toaster.create({
