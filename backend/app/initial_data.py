@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 
 
 def init_test_data(db: Session):
-    from models import Product, Supplier, ProductSupplier, Order, User, ProductType
+    from models import Product, Supplier, ProductSupplier, ProductType
 
     if db.query(ProductType).count() == 0:
         product_types = [
